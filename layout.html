@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Student Academic Project Monitoring</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Purple-Blue Gradient Background */
+            background-color: #120f2c; /* Dark purple fallback for older browsers */
+            background-image: 
+                radial-gradient(circle at top left, rgba(0, 123, 255, 0.9), transparent 60%),  /* Blue intensity at top-left */
+                radial-gradient(circle at bottom right, rgba(128, 0, 255, 0.9), transparent 60%); /* Purple intensity at bottom-right */
+            background-blend-mode: screen; /* Blends colors for collision/mixing in the center */
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: rgba(0, 0, 0, 0.8); /* Semi-transparent black for contrast */
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px); /* Modern glass effect */
+        }
+
+        nav a {
+            color: #bbb;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: linear-gradient(45deg, #00ff99, #00ccff); /* Green-cyan highlight */
+            color: #000;
+            box-shadow: 0 0 8px #00ff99, 0 0 15px #00ccff;
+            transform: scale(1.05);
+        }
+
+        nav a i {
+            font-size: 1.2rem;
+        }
+
+        /* Container for Page Content */
+        .container {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Headings */
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+            color: #00ff99; /* Accent color */
+        }
+
+        /* Forms */
+        form {
+            background: rgba(0, 0, 0, 0.7); /* Semi-transparent for gradient visibility */
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 255, 150, 0.3);
+            max-width: 600px;
+            margin: 1rem auto;
+            backdrop-filter: blur(10px);
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #00ccff; /* Blue accent */
+        }
+
+        input[type=text], input[type=password], input[type=date], input[type=email], input[type=number], textarea {
+            width: 100%;
+            padding: 0.6rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #00ff99;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        input[type=text]::placeholder, input[type=password]::placeholder, textarea::placeholder {
+            color: #ccc;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        input[type=submit], button {
+            background: linear-gradient(45deg, #00ff99, #00ccff);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            color: #000;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        input[type=submit]:hover, button:hover {
+            background: #0077aa;
+            color: #fff;
+        }
+
+        /* Flash Messages */
+        .flash {
+            max-width: 600px;
+            margin: 1rem auto;
+            padding: 1rem;
+            background: rgba(0, 100, 0, 0.8);
+            border-radius: 6px;
+            box-shadow: 0 0 10px #00ff99aa;
+            color: #ccffcc;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 12px rgba(0, 255, 150, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        th, td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #222;
+            text-align: left;
+            color: #ccc;
+        }
+
+        th {
+            background: linear-gradient(45deg, #00ff99, #00ccff);
+            color: #000;
+            font-weight: 700;
+        }
+
+        tr:hover {
+            background: rgba(0, 51, 51, 0.4);
+        }
+
+        /* Links in Tables */
+        a {
+            color: #00ccff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer (Optional) */
+        footer {
+            text-align: center;
+            padding: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media(max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 1rem;
+            }
+            nav a {
+                font-size: 1rem;
+                padding: 0.5rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            form {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        {% if 'username' in session %}
+            {% if session['role'] == 'student' %}
+                <a href="{{ url_for('student_home') }}" class="{% if active == 'home' %}active{% endif %}"><i class="fas fa-home"></i> Home</a>
+                <a href="{{ url_for('register_team') }}" class="{% if active == 'register' %}active{% endif %}"><i class="fas fa-users"></i> Register Team</a>
+                <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            {% elif session['role'] == 'admin' %}
+                <a href="{{ url_for('admin_dashboard') }}" class="{% if active == 'home' %}active{% endif %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            {% endif %}
+        {% else %}
+            <a href="{{ url_for('login_page') }}" class="{% if active == 'login' %}active{% endif %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="flash">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

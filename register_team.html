@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Register Project Team</h2>
+
+<form method="POST" action="{{ url_for('register_team') }}">
+    <label for="team_name">Team Name</label>
+    <input id="team_name" name="team_name" type="text" required />
+
+    <label for="members">Team Members (comma separated)</label>
+    <input id="members" name="members" type="text" required/>
+
+    <label for="supervisor">Supervisor Name</label>
+    <input id="supervisor" name="supervisor" type="text" required/>
+
+    <label for="project_title">Project Title</label>
+    <input id="project_title" name="project_title" type="text" required/>
+
+    <input type="submit" value="Register Team" />
+</form>
+{% endblock %}

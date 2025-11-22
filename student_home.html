@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Welcome, {{ session['username'] }}!</h2>
+<p>Choose an action from the navigation bar.</p>
+
+<h3>Your Registered Projects</h3>
+{% if projects %}
+<table>
+    <thead><tr><th>Team Name</th><th>Members</th><th>Supervisor</th><th>Project Title</th><th>Actions</th></tr></thead>
+    <tbody>
+        {% for project in projects %}
+        <tr>
+            <td>{{ project[1] }}</td>
+            <td>{{ project[2] }}</td>
+            <td>{{ project[3] }}</td>
+            <td>{{ project[4] }}</td>
+            <td><a href="{{ url_for('submit_report', project_id=project[0]) }}" style="background:#00ff99; color:#000; padding:0.3em 0.6em; border-radius:4px; text-decoration:none;">Submit Report</a></td>
+            <td>
+    {% if evaluations[project[0]] %}
+        <ul>
+            {% for eval in evaluations[project[0]] %}
+                <li><strong>{{ eval[2] }}</strong> (Score: {{ eval[3] }}, Feedback: {{ eval[4] }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        No evaluations yet.
+    {% endif %}
+</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No projects registered yet. Register your team now!</p>
+{% endif %}
+{% endblock %}

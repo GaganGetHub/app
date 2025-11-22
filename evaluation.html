@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Evaluation for Project ID {{ project_id }}</h2>
+
+<form method="POST" action="{{ url_for('evaluate', project_id=project_id) }}">
+    <label for="score">Score (0-100)</label>
+    <input id="score" name="score" type="number" min="0" max="100" required/>
+
+    <label for="feedback">Feedback</label>
+    <textarea id="feedback" name="feedback" rows="5" required></textarea>
+
+    <input type="submit" value="Submit Evaluation" />
+</form>
+<form method="POST" action="{{ url_for('reset_evaluations', project_id=project_id) }}" onsubmit="return confirm('Are you sure you want to reset all evaluations for this project?');">
+    <button type="submit" style="background:#cc0000; color:#fff; padding:0.5em 1em; border:none; border-radius:5px; cursor:pointer;">
+        Reset Evaluations
+    </button>
+</form>
+
+<h3>Previous Evaluations</h3>
+{% if evaluations %}
+<table>
+  <thead><tr><th>Evaluator</th><th>Score</th><th>Feedback</th></tr></thead>
+  <tbody>
+    {% for eval in evaluations %}
+    <tr>
+      <td>{{ eval[2] }}</td>   <!-- Evaluator name (index 2) -->
+      <td>{{ eval[3] }}</td>   <!-- Score (index 3) -->
+      <td>{{ eval[4] }}</td>   <!-- Feedback (index 4) -->
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No evaluation data yet.</p>
+{% endif %}
+{% endblock %}
